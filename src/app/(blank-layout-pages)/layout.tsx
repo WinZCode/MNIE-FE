@@ -1,4 +1,6 @@
 // Type Imports
+import { ConfigProvider } from 'antd'
+
 import type { ChildrenType } from '@core/types'
 
 // Component Imports
@@ -16,9 +18,17 @@ const Layout = ({ children }: Props) => {
   const systemMode = getSystemMode()
 
   return (
-    <Providers direction={direction}>
-      <BlankLayout systemMode={systemMode}>{children}</BlankLayout>
-    </Providers>
+    <ConfigProvider
+      theme={{
+        token: {
+          fontFamily: 'Inter, sans-serif'
+        }
+      }}
+    >
+      <Providers direction={direction}>
+        <BlankLayout systemMode={systemMode}>{children}</BlankLayout>
+      </Providers>
+    </ConfigProvider>
   )
 }
 
