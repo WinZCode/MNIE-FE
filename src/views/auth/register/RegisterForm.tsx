@@ -4,17 +4,29 @@ import React from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { Button, Form, Input, Typography } from 'antd'
+import { Button, Form, Input, message, Typography } from 'antd'
 
-import { LockOutlined, MailOutlined } from '@ant-design/icons'
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
+import { useMutation } from '@tanstack/react-query'
+
+import * as UserApi from '@/utils/userApi'
 
 const { Text, Title } = Typography
 
 export const RegisterForm = () => {
   const router = useRouter()
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values)
+  const loginMutation = useMutation({
+    mutationFn: UserApi.signupUser,
+    onSuccess: () => {
+      message.success('Đăng ký thành công')
+      router.push('/home')
+    },
+    onError: () => message.error('Đăng ký thất bại')
+  })
+
+  const handleRegister = (data: any) => {
+    loginMutation.mutate(data)
   }
 
   return (
@@ -38,10 +50,21 @@ export const RegisterForm = () => {
           initialValues={{
             remember: true
           }}
-          onFinish={onFinish}
+          onFinish={handleRegister}
           layout='vertical'
           requiredMark='optional'
         >
+          <Form.Item
+            name='username'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your Name!'
+              }
+            ]}
+          >
+            <Input prefix={<UserOutlined />} placeholder='User Name' />
+          </Form.Item>
           <Form.Item
             name='email'
             rules={[
@@ -83,7 +106,7 @@ export const RegisterForm = () => {
               })
             ]}
           >
-            <Input.Password prefix={<LockOutlined />} type='password' placeholder='Password' />
+            <Input.Password prefix={<LockOutlined />} type='password' placeholder='Confirm Password' />
           </Form.Item>
           <Form.Item style={{ marginBottom: '0px' }}>
             <Button type='primary' htmlType='submit' className='w-full'>

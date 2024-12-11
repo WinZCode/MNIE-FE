@@ -4,7 +4,7 @@ import React from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { Button, Checkbox, Form, Input, Typography } from 'antd'
+import { Button, Form, Input, message, Typography } from 'antd'
 
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import { useMutation } from '@tanstack/react-query'
@@ -19,14 +19,13 @@ export const LoginForm = () => {
   const loginMutation = useMutation({
     mutationFn: UserApi.loginUser,
     onSuccess: () => {
-      console.log('login success')
+      message.success('Đăng nhập thành công')
       router.push('/home')
     },
-    onError: () => console.log('login error')
+    onError: () => message.error('Đăng nhập thất bại')
   })
 
   const handleLogin = (data: any) => {
-    console.log(data)
     loginMutation.mutate(data)
   }
 
@@ -77,10 +76,10 @@ export const LoginForm = () => {
             <Input.Password prefix={<LockOutlined />} type='password' placeholder='Password' />
           </Form.Item>
           <Form.Item>
-            <div className='flex justify-between'>
-              <Form.Item name='remember' valuePropName='checked' noStyle>
+            <div className='text-end'>
+              {/* <Form.Item name='remember' valuePropName='checked' noStyle>
                 <Checkbox>Nhớ mật khẩu</Checkbox>
-              </Form.Item>
+              </Form.Item> */}
               <a href=''>Quên mật khẩu?</a>
             </div>
           </Form.Item>
@@ -90,7 +89,7 @@ export const LoginForm = () => {
             </Button>
             <div className='text-center mt-6'>
               <Text className='text-[#000000a6]'>Không có tài khoản?</Text>{' '}
-              <a href='' onClick={() => router.push('/regiter')}>
+              <a href='' onClick={() => router.push('/register')}>
                 Đăng ký ngay
               </a>
             </div>

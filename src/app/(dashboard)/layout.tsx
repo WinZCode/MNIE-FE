@@ -11,20 +11,17 @@ import HorizontalLayout from '@layouts/HorizontalLayout'
 
 // Component Imports
 import Providers from '@components/Providers'
-import Navigation from '@components/layout/vertical/Navigation'
 import Header from '@components/layout/horizontal/Header'
-import Navbar from '@components/layout/vertical/Navbar'
-import VerticalFooter from '@components/layout/vertical/Footer'
 import HorizontalFooter from '@components/layout/horizontal/Footer'
 import ScrollToTop from '@core/components/scroll-to-top'
 
 // Util Imports
-import { getMode, getSystemMode } from '@core/utils/serverHelpers'
+import { getSystemMode } from '@core/utils/serverHelpers'
+import { SideNavBar } from '@/components/navbar/SideNavBar'
 
 const Layout = async ({ children }: ChildrenType) => {
   // Vars
   const direction = 'ltr'
-  const mode = getMode()
   const systemMode = getSystemMode()
 
   return (
@@ -32,11 +29,7 @@ const Layout = async ({ children }: ChildrenType) => {
       <LayoutWrapper
         systemMode={systemMode}
         verticalLayout={
-          <VerticalLayout
-            navigation={<Navigation mode={mode} systemMode={systemMode} />}
-            navbar={<Navbar />}
-            footer={<VerticalFooter />}
-          >
+          <VerticalLayout navigation={<SideNavBar />} navbar={<div></div>}>
             {children}
           </VerticalLayout>
         }
