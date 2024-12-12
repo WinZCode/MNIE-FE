@@ -1,6 +1,8 @@
 // import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 
+axios.defaults.withCredentials = true
+
 export const axiosJWT = axios.create()
 
 export const loginUser = async (data: any) => {
@@ -11,8 +13,6 @@ export const loginUser = async (data: any) => {
 
 export const signupUser = async (data: any) => {
   const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/sign-up`, data)
-
-  console.log(process.env.NEXT_PUBLIC_API_URL)
 
   return res.data
 }

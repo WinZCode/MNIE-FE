@@ -9,6 +9,7 @@ import ThemeProvider from '@components/theme'
 // Util Imports
 import { getMode, getSettingsFromCookie, getSystemMode } from '@core/utils/serverHelpers'
 import AntdConfigProvider from './AntConfigProvider'
+import ReduxProvider from '@/redux/ReduxProvider'
 
 type Props = ChildrenType & {
   direction: Direction
@@ -27,7 +28,9 @@ const Providers = (props: Props) => {
     <VerticalNavProvider>
       <SettingsProvider settingsCookie={settingsCookie} mode={mode}>
         <ThemeProvider direction={direction} systemMode={systemMode}>
-          <AntdConfigProvider>{children}</AntdConfigProvider>
+          <AntdConfigProvider>
+            <ReduxProvider>{children}</ReduxProvider>
+          </AntdConfigProvider>
         </ThemeProvider>
       </SettingsProvider>
     </VerticalNavProvider>

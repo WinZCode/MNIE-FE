@@ -9,18 +9,50 @@ import { Button, Form, Input, message, Typography } from 'antd'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import { useMutation } from '@tanstack/react-query'
 
+import { useDispatch } from 'react-redux'
+
+import type { JwtPayload } from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
+
 import * as UserApi from '@/utils/userApi'
+import { updateUser } from '@/redux/slides/userSlide'
+
+interface CustomJwtPayload extends JwtPayload {
+  id?: string
+}
 
 const { Text, Title } = Typography
 
 export const LoginForm = () => {
   const router = useRouter()
 
+  const dispatch = useDispatch()
+
+  const handleGetDetailsUser = async (id: any, token: any) => {
+    const storage = localStorage.getItem('refresh_token') as string
+    const refreshToken = JSON.parse(storage)
+    const res = await UserApi.getDetailsUser(id, token)
+
+    console.log(res?.data)
+
+    dispatch(updateUser({ ...res?.data, access_token: token, refresh_token: refreshToken }))
+  }
+
   const loginMutation = useMutation({
     mutationFn: UserApi.loginUser,
-    onSuccess: () => {
+    onSuccess: data => {
       message.success('Đăng nhập thành công')
       router.push('/home')
+      localStorage.setItem('access_token', JSON.stringify(data?.access_token))
+      localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token))
+
+      if (data?.access_token) {
+        const decoded = jwtDecode<CustomJwtPayload>(data?.access_token)
+
+        if (decoded?.id) {
+          handleGetDetailsUser(decoded?.id, data?.access_token)
+        }
+      }
     },
     onError: () => message.error('Đăng nhập thất bại')
   })

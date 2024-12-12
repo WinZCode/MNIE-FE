@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
   // Lấy token hoặc thông tin xác thực từ cookies
-  const token = request.cookies.get('auth-token')
+  const token = request.cookies.get('refresh_token')
 
   // Danh sách các route cần bảo vệ
   const protectedRoutes = ['/', '/home', '/about']
