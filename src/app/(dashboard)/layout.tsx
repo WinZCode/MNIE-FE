@@ -11,13 +11,13 @@ import HorizontalLayout from '@layouts/HorizontalLayout'
 
 // Component Imports
 import Providers from '@components/Providers'
-import Header from '@components/layout/horizontal/Header'
 import HorizontalFooter from '@components/layout/horizontal/Footer'
 import ScrollToTop from '@core/components/scroll-to-top'
 
 // Util Imports
 import { getSystemMode } from '@core/utils/serverHelpers'
 import { SideNavBar } from '@/components/navbar/SideNavBar'
+import { HeaderBar } from '@/components/navbar/HeaderBar'
 
 const Layout = async ({ children }: ChildrenType) => {
   // Vars
@@ -29,12 +29,12 @@ const Layout = async ({ children }: ChildrenType) => {
       <LayoutWrapper
         systemMode={systemMode}
         verticalLayout={
-          <VerticalLayout navigation={<SideNavBar />} navbar={<div></div>}>
+          <VerticalLayout navigation={<SideNavBar />} navbar={<HeaderBar />}>
             {children}
           </VerticalLayout>
         }
         horizontalLayout={
-          <HorizontalLayout header={<Header />} footer={<HorizontalFooter />}>
+          <HorizontalLayout header={<></>} footer={<HorizontalFooter />}>
             {children}
           </HorizontalLayout>
         }

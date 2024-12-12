@@ -7,7 +7,6 @@ import type { ReactNode } from 'react'
 import { Layout } from 'antd'
 
 import type { ChildrenType } from '@core/types'
-import { StyledHeader } from '@/styled/styled'
 
 type VerticalLayoutProps = ChildrenType & {
   navigation?: ReactNode
@@ -21,7 +20,7 @@ const VerticalLayout = (props: VerticalLayoutProps) => {
 
   return (
     <Layout className='h-screen'>
-      <StyledHeader>{navbar || null}</StyledHeader>
+      {navbar || null}
       <Layout>
         {navigation || null}
         <Layout>{children}</Layout>

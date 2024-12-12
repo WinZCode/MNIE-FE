@@ -92,6 +92,11 @@ const sources: BundleScriptConfig = {
       monotone: false,
       prefix: 'emoji'
     } */
+    {
+      dir: 'src/assets/icon',
+      monotone: true,
+      prefix: 'icon'
+    }
   ]
 }
 

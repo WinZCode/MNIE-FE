@@ -33,8 +33,7 @@ export const LoginForm = () => {
     const refreshToken = JSON.parse(storage)
     const res = await UserApi.getDetailsUser(id, token)
 
-    console.log(res?.data)
-
+    //! chưa lưu dc vào redux
     dispatch(updateUser({ ...res?.data, access_token: token, refresh_token: refreshToken }))
   }
 
