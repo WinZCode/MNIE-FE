@@ -23,7 +23,7 @@ const VerticalLayout = (props: VerticalLayoutProps) => {
       {navbar || null}
       <Layout>
         {navigation || null}
-        <Layout>{children}</Layout>
+        <Layout className='p-4 bg-[#f0f2f5]'>{children}</Layout>
       </Layout>
     </Layout>
   )

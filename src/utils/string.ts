@@ -2,3 +2,10 @@ export const ensurePrefix = (str: string, prefix: string) => (str.startsWith(pre
 export const withoutSuffix = (str: string, suffix: string) =>
   str.endsWith(suffix) ? str.slice(0, -suffix.length) : str
 export const withoutPrefix = (str: string, prefix: string) => (str.startsWith(prefix) ? str.slice(prefix.length) : str)
+
+/** Hàm lấy chữ cái đầu tiên */
+export const getFirstLetter = (str: string): string => {
+  const firstLetter = str?.charAt(0).toUpperCase()
+
+  return firstLetter
+}
