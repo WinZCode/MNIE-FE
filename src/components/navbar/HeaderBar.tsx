@@ -2,20 +2,20 @@
 
 import { useRouter } from 'next/navigation'
 
+import Link from 'next/link'
+
 import type { MenuProps } from 'antd'
 import { Avatar, Dropdown, Tooltip } from 'antd'
 
-import { useDispatch, useSelector } from 'react-redux'
-
 import { getFirstLetter } from '@/utils/string'
-import Link from '../Link'
-import { resetUser, selectUser } from '@/redux/slices/userSlice'
-import * as UserApi from '@/utils/userApi'
+
+import { useUser } from '@/hooks/useUser'
 
 export const HeaderBar = () => {
-  const user = useSelector(selectUser)
-  const dispatch = useDispatch()
+  const { user, logout } = useUser()
   const router = useRouter()
+
+  console.log(user)
 
   const items: MenuProps['items'] = [
     {
@@ -30,22 +30,13 @@ export const HeaderBar = () => {
     {
       key: '2',
       label: (
-        <div
-          className='flex items-center gap-2 p-1 text-body-14 font-medium cursor-pointer'
-          onClick={() => handleLogout()}
-        >
+        <div className='flex items-center gap-2 p-1 text-body-14 font-medium cursor-pointer' onClick={logout}>
           <i className='icon-logout size-5' />
           <div className='w-36 text-body-14 font-medium'>Đăng xuất</div>
         </div>
       )
     }
   ]
-
-  const handleLogout = async () => {
-    await UserApi.logoutUser()
-    dispatch(resetUser())
-    router.push('/login')
-  }
 
   return (
     <div className='bg-[#001529] h-14 px-6 flex items-center justify-between'>
@@ -66,8 +57,8 @@ export const HeaderBar = () => {
             <Avatar src={user?.avatar} className='bg-primary object-cover' />
           ) : (
             <div className='flex items-center gap-2'>
-              <Avatar className='size-9 bg-white text-black'>{getFirstLetter('Admin')}</Avatar>
-              <div>Admin</div>
+              <Avatar className='size-9 bg-white text-black'>{getFirstLetter(user?.username)}</Avatar>
+              <div>{user?.username}</div>
             </div>
           )}
         </Dropdown>

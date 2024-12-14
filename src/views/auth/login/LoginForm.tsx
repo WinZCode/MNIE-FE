@@ -4,6 +4,8 @@ import React from 'react'
 
 import { useRouter } from 'next/navigation'
 
+import Link from 'next/link'
+
 import { Button, Form, Input, message, Typography } from 'antd'
 
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
@@ -121,10 +123,8 @@ export const LoginForm = () => {
               Đăng nhập
             </Button>
             <div className='text-center mt-6'>
-              <Text className='text-[#000000a6]'>Không có tài khoản?</Text>{' '}
-              <a href='' onClick={() => router.push('/register')}>
-                Đăng ký ngay
-              </a>
+              <Text className='text-[#000000a6]'>Không có tài khoản?</Text>
+              <Link href='/register'>Đăng ký ngay</Link>
             </div>
           </Form.Item>
         </Form>
