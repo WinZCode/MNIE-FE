@@ -15,7 +15,7 @@ import type { JwtPayload } from 'jwt-decode'
 import { jwtDecode } from 'jwt-decode'
 
 import * as UserApi from '@/utils/userApi'
-import { updateUser } from '@/redux/slides/userSlide'
+import { updateUser } from '@/redux/slices/userSlice'
 
 interface CustomJwtPayload extends JwtPayload {
   id?: string
@@ -33,14 +33,14 @@ export const LoginForm = () => {
     const refreshToken = JSON.parse(storage)
     const res = await UserApi.getDetailsUser(id, token)
 
-    //! chưa lưu dc vào redux
+    console.log(res.data)
+
     dispatch(updateUser({ ...res?.data, access_token: token, refresh_token: refreshToken }))
   }
 
   const loginMutation = useMutation({
     mutationFn: UserApi.loginUser,
     onSuccess: data => {
-      message.success('Đăng nhập thành công')
       router.push('/home')
       localStorage.setItem('access_token', JSON.stringify(data?.access_token))
       localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token))
@@ -52,6 +52,8 @@ export const LoginForm = () => {
           handleGetDetailsUser(decoded?.id, data?.access_token)
         }
       }
+
+      message.success('Đăng nhập thành công')
     },
     onError: () => message.error('Đăng nhập thất bại')
   })
